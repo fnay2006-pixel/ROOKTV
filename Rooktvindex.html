@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROOK TV</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  background:#0a0a10;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* ===== HEADER ===== */
+.header{
+  height:60px;
+  display:grid;
+  grid-template-columns:50px 1fr 50px;
+  align-items:center;
+  background:#11111a;
+  border-bottom:1px solid #222;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.header h1{
+  text-align:center;
+  color:#00ff88;
+  font-size:20px;
+  font-weight:900;
+}
+
+.btn{
+  text-align:center;
+  font-size:22px;
+  cursor:pointer;
+  color:white;
+}
+
+/* ===== SEARCH ===== */
+.search{
+  display:none;
+  padding:10px;
+}
+
+.search input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  background:#1c1c28;
+  color:white;
+  font-weight:bold;
+}
+
+/* ===== CONTENT ===== */
+.content{
+  padding:12px;
+}
+
+.card{
+  background:#161622;
+  margin:10px 0;
+  padding:16px;
+  border-radius:12px;
+  text-align:center;
+  font-weight:bold;
+  border:1px solid #222;
+  transition:0.2s;
+}
+
+.card:active{
+  transform:scale(0.97);
+  border-color:#00ff88;
+  color:#00ff88;
+}
+
+.hide{display:none;}
+
+/* ===== DRAWER ===== */
+.drawer{
+  position:fixed;
+  top:0;
+  left:-100%;
+  width:75%;
+  height:100%;
+  background:#11111a;
+  transition:0.3s;
+  padding:20px;
+  z-index:20;
+}
+
+.drawer.open{left:0;}
+
+.drawer div{
+  padding:14px;
+  border-bottom:1px solid #222;
+  font-weight:bold;
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#11111a;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #222;
+}
+
+.bottom div{
+  font-size:12px;
+  font-weight:bold;
+  opacity:0.7;
+  cursor:pointer;
+}
+
+.bottom .active{
+  color:#00ff88;
+  opacity:1;
+}
+
+/* ===== LOCK ===== */
+#lock{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:99999;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOCK -->
+<div id="lock">
+  <h1>SECURITY ALERT</h1>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="btn" onclick="toggleDrawer()">☰</div>
+  <h1>ROOK TV</h1>
+  <div class="btn" onclick="toggleSearch()">🔍</div>
+</div>
+
+<!-- SEARCH -->
+<div class="search" id="searchBox">
+  <input type="text" placeholder="ابحث..." onkeyup="search(this.value)">
+</div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <div>Contact</div>
+  <div>Facebook</div>
+  <div>Instagram</div>
+  <div>Telegram</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="card" onclick="go('go:bein1080')">beIN SPORTS 1080P</div>
+  <div class="card" onclick="go('go:bein720')">beIN SPORTS 720P</div>
+  <div class="card" onclick="go('go:bein360')">beIN SPORTS 360P</div>
+  <div class="card" onclick="go('go:arabic')">ARABIC CHANNELS</div>
+  <div class="card" onclick="go('go:mbc')">MBC CHANNELS</div>
+  <div class="card" onclick="go('go:kids')">KIDS</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom">
+  <div class="active" onclick="home()">🏠 الرئيسية</div>
+  <div onclick="go('go:matches')">⚽ مباريات اليوم</div>
+</div>
+
+<script>
+
+(function(){
+
+// ===== PROTECTION =====
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("selectstart",e=>e.preventDefault());
+document.addEventListener("dragstart",e=>e.preventDefault());
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="F12" || (e.ctrlKey && ["u","s","i","j"].includes(e.key.toLowerCase()))){
+    lock();
+  }
+});
+
+// ===== DETECT DEVTOOLS =====
+setInterval(()=>{
+  if(window.outerWidth - window.innerWidth > 150){
+    lock();
+  }
+},1000);
+
+// ===== FUNCTIONS =====
+window.toggleDrawer=function(){
+  document.getElementById("drawer").classList.toggle("open");
+}
+
+window.toggleSearch=function(){
+  document.getElementById("searchBox").style.display =
+  document.getElementById("searchBox").style.display==="block"?"none":"block";
+}
+
+window.search=function(v){
+  document.querySelectorAll(".card").forEach(c=>{
+    c.style.display=c.textContent.toLowerCase().includes(v.toLowerCase())?"block":"none";
+  });
+}
+
+window.go=function(l){
+  window.location.href=l;
+}
+
+window.home=function(){
+  alert("Home Page");
+}
+
+function lock(){
+  document.getElementById("lock").style.display="flex";
+  document.body.innerHTML="";
+}
+
+})();
+</script>
+
+</body>
+</html>

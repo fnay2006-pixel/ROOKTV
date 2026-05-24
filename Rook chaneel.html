@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>beIN SPORTS</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+  overscroll-behavior:none;
+}
+
+body{
+  background:#0f0f12; /* تحويل الخلفية للأسود الفخم */
+  -webkit-touch-callout:none;
+}
+
+.app{
+  width:100%;
+  min-height:100vh;
+  background-image:linear-gradient(rgba(15,15,18,0.9), rgba(15,15,18,0.95)), url("https://up6.cc/2026/04/177741237231511.png");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+/* Header الاحترافي الموحد */
+.header{
+  height:64px;
+  background:#16161f;
+  color:white;
+  display:grid;
+  grid-template-columns:46px 1fr 46px;
+  align-items:center;
+  padding:0 10px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 4px 15px rgba(0,0,0,.5);
+  border-bottom: 1px solid #222230;
+}
+
+.header h1{
+  font-size:clamp(19px, 5.2vw, 25px);
+  font-weight:900;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  line-height:1;
+  padding-top:2px;
+  color: #00ff66; /* إضاءة عنوان القسم بالأخضر الفسفوري */
+  text-shadow: 0 0 10px rgba(0,255,102,0.3);
+}
+
+.icon-btn{
+  width:46px;
+  height:46px;
+  background:none;
+  border:none;
+  color:white;
+  font-size:clamp(22px, 5.5vw, 26px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition: color 0.3s ease;
+}
+
+.icon-btn:hover, .icon-btn:active{
+  color: #00ff66;
+}
+
+/* Search صندوق البحث المتناسق */
+.search-box{
+  display:none;
+  padding:12px;
+  background:#16161f;
+  position:sticky;
+  top:64px;
+  z-index:45;
+  border-bottom: 1px solid #222230;
+}
+
+.search-box.show{
+  display:block;
+}
+
+.search-box input{
+  width:100%;
+  height:44px;
+  border:1px solid #222230;
+  outline:none;
+  border-radius:12px;
+  padding:0 14px;
+  font-size:16px;
+  font-weight:700;
+  color:#ffffff;
+  background:#1f1f2e;
+}
+
+.search-box input::placeholder{
+  color: #7c7c93;
+}
+
+/* Grid */
+.grid{
+  padding:14px 10px 25px;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:14px 10px;
+}
+
+/* Channel Card تحويل الكروت للستايل المظلم والفسفوري */
+.channel{
+  background:#16161f;
+  border:1px solid #222230;
+  border-radius:14px;
+  min-height:clamp(145px, 32vw, 210px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:clamp(14px, 4vw, 28px) 6px clamp(10px, 3vw, 18px);
+  box-shadow:0 4px 10px rgba(0,0,0,.3);
+  cursor:pointer;
+  overflow:hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* تأثير التوهج عند اللمس والضغط */
+.channel:active, .channel:hover{
+  transform:scale(.96) translateY(-2px);
+  background: #1c1c27;
+  border-color: #00ff66;
+  box-shadow: 0 0 15px rgba(0,255,102,0.25);
+}
+
+.channel:active .channel-title, .channel:hover .channel-title{
+  color: #00ff66;
+}
+
+.logo-box{
+  width:clamp(78px, 19vw, 130px);
+  height:clamp(62px, 15vw, 95px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-box img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+.channel-title{
+  width:100%;
+  color:#ffffff; /* تحويل النص للون الأبيض النقي */
+  font-size:clamp(12px, 3.5vw, 18px);
+  font-weight:700;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  line-height:1.2;
+  padding:0 2px;
+  transition: color 0.3s ease;
+}
+
+/* Small phones */
+@media(max-width:380px){
+  .header{
+    height:60px;
+    grid-template-columns:42px 1fr 42px;
+    padding:0 8px;
+  }
+
+  .search-box{
+    top:60px;
+  }
+
+  .header h1{
+    font-size:18px;
+  }
+
+  .icon-btn{
+    width:42px;
+    height:42px;
+    font-size:21px;
+  }
+
+  .grid{
+    gap:10px 7px;
+    padding:9px 7px 24px;
+  }
+
+  .channel{
+    min-height:138px;
+  }
+}
+
+/* Mobile = always 3 per row */
+@media(max-width:699px){
+  .grid{
+    grid-template-columns:repeat(3, minmax(0,1fr));
+  }
+}
+
+/* Tablet & Screens = auto fit */
+@media(min-width:700px){
+  .app{
+    width:100%;
+    max-width:none;
+  }
+
+  .grid{
+    grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:16px;
+    padding:14px;
+  }
+}
+
+@media(min-width:1000px){
+  .grid{
+    grid-template-columns:repeat(auto-fit, minmax(175px, 1fr));
+    gap:18px;
+    padding:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <button class="icon-btn" onclick="goBack()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <h1>beIN SPORTS (1080P)</h1>
+
+    <button class="icon-btn" onclick="toggleSearch()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
+
+  <div class="search-box" id="searchBox">
+    <input type="text" id="searchInput" placeholder="ابحث عن قناة..." onkeyup="searchChannels()">
+  </div>
+
+  <div class="grid" id="channelsGrid"></div>
+
+</div>
+
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+
+const channels = [
+  {title:"beIN SPORTS 1", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+1", link:"go:bin1"},
+  {title:"beIN SPORTS 2", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+2", link:"go:bein_sports_2"},
+  {title:"beIN SPORTS 3", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+3", link:"go:bein_sports_3"},
+  {title:"beIN SPORTS 4", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+4", link:"go:bein_sports_4"},
+  {title:"beIN SPORTS 5", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+5", link:"go:bein_sports_5"},
+  {title:"beIN SPORTS 6", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+6", link:"go:bein_sports_6"},
+  {title:"beIN SPORTS 7", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+7", link:"go:bein_sports_7"},
+  {title:"beIN SPORTS 8", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+8", link:"go:bein_sports_8"},
+  {title:"beIN SPORTS 9", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=beIN+9", link:"go:bein_sports_9"},
+  {title:"beIN XTRA 1", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=XTRA+1", link:"go:bein_xtra_1"},
+  {title:"beIN XTRA 2", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=XTRA+2", link:"go:bein_xtra_2"},
+  {title:"beIN XTRA 3", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=XTRA+3", link:"go:bein_xtra_3"},
+  {title:"beIN France 1", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=FR+1", link:"go:bein_france_1"},
+  {title:"beIN France 2", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=FR+2", link:"go:bein_france_2"},
+  {title:"beIN France 3", image:"https://dummyimage.com/180x120/ffffff/5b2c83&text=FR+3", link:"go:bein_france_3"}
+];
+
+function renderChannels(list = channels){
+  const grid = document.getElementById("channelsGrid");
+  grid.innerHTML = "";
+
+  list.forEach(channel => {
+    grid.innerHTML += `
+      <div class="channel" onclick="openChannel('${channel.link}')">
+        <div class="logo-box">
+          <img src="${channel.image}" alt="${channel.title}">
+        </div>
+        <div class="channel-title">${channel.title}</div>
+      </div>
+    `;
+  });
+}
+
+function openChannel(link){
+  window.location.href = link;
+}
+
+function goBack(){
+  if(history.length > 1){
+    history.back();
+  }else{
+    window.location.href = "go:channels";
+  }
+}
+
+function toggleSearch(){
+  const box = document.getElementById("searchBox");
+  const input = document.getElementById("searchInput");
+
+  box.classList.toggle("show");
+
+  if(box.classList.contains("show")){
+    input.focus();
+  }else{
+    input.value = "";
+    renderChannels();
+  }
+}
+
+function searchChannels(){
+  const value = document.getElementById("searchInput").value.toLowerCase();
+
+  const filtered = channels.filter(channel =>
+    channel.title.toLowerCase().includes(value)
+  );
+
+  renderChannels(filtered);
+}
+
+renderChannels();
+</script>
+
+</body>
+</html>

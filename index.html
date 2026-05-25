@@ -150,24 +150,20 @@ body{
 
 <body>
 
-<!-- LOCK -->
 <div id="lock">
   <h1>SECURITY ALERT</h1>
 </div>
 
-<!-- HEADER -->
 <div class="header">
   <div class="btn" onclick="toggleDrawer()">☰</div>
   <h1>ROOK TV</h1>
   <div class="btn" onclick="toggleSearch()">🔍</div>
 </div>
 
-<!-- SEARCH -->
 <div class="search" id="searchBox">
   <input type="text" placeholder="ابحث..." onkeyup="search(this.value)">
 </div>
 
-<!-- DRAWER -->
 <div class="drawer" id="drawer">
   <div>Contact</div>
   <div>Facebook</div>
@@ -175,10 +171,9 @@ body{
   <div>Telegram</div>
 </div>
 
-<!-- CONTENT -->
 <div class="content">
 
-  <div class="card" onclick="go('go:bein1080')">beIN SPORTS 1080P</div>
+  <div class="card" onclick="go('chaneel.html')">beIN SPORTS 1080P</div>
   <div class="card" onclick="go('go:bein720')">beIN SPORTS 720P</div>
   <div class="card" onclick="go('go:bein360')">beIN SPORTS 360P</div>
   <div class="card" onclick="go('go:arabic')">ARABIC CHANNELS</div>
@@ -187,14 +182,12 @@ body{
 
 </div>
 
-<!-- BOTTOM NAV -->
 <div class="bottom">
   <div class="active" onclick="home()">🏠 الرئيسية</div>
   <div onclick="go('go:matches')">⚽ مباريات اليوم</div>
 </div>
 
 <script>
-
 (function(){
 
 // ===== PROTECTION =====
@@ -208,21 +201,14 @@ document.addEventListener("keydown",e=>{
   }
 });
 
-// ===== DETECT DEVTOOLS =====
-setInterval(()=>{
-  if(window.outerWidth - window.innerWidth > 150){
-    lock();
-  }
-},1000);
-
 // ===== FUNCTIONS =====
 window.toggleDrawer=function(){
   document.getElementById("drawer").classList.toggle("open");
 }
 
 window.toggleSearch=function(){
-  document.getElementById("searchBox").style.display =
-  document.getElementById("searchBox").style.display==="block"?"none":"block";
+  const box = document.getElementById("searchBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
 }
 
 window.search=function(v){
@@ -236,12 +222,12 @@ window.go=function(l){
 }
 
 window.home=function(){
-  alert("Home Page");
+  window.location.reload();
 }
 
 function lock(){
   document.getElementById("lock").style.display="flex";
-  document.body.innerHTML="";
+  document.body.innerHTML="<h1>SECURITY ALERT</h1>";
 }
 
 })();
